@@ -80,19 +80,19 @@ void readDataActMap() {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
 
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
 
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
       cout << element3 << endl;
       int v = element3.find(":",0);
       cout << element3.substr(0,v) << endl;
@@ -125,19 +125,19 @@ void readDataActMapOld() {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
 
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
 
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
       data_obj_map[element1].push_back(element3);
     }
     cout << "\t" << element1 << " -> \"" << data_act_map[element1] << "\"" << endl;
@@ -217,9 +217,9 @@ void filterCloud(pcl::PointCloud<PointT> &cloud, map<int, int> &tablePoints,
        << objIndices.indices.size() << endl;
   pcl::PointIndices localIndices, clusterIndices;
   for (int i = 0; i < cloud.points.size(); i++) {
-    double dist_from_cam = sqrt(sqr(origin.x - cloud.points[i].x) +
-                           sqr(origin.y - cloud.points[i].y) +
-                           sqr(origin.z - cloud.points[i].z));
+    double dist_from_cam = sqrt(frame_sqr(origin.x - cloud.points[i].x) +
+                           frame_sqr(origin.y - cloud.points[i].y) +
+                           frame_sqr(origin.z - cloud.points[i].z));
 
     if (dist_from_cam < 3500 && dist_from_cam > 0 )
     {

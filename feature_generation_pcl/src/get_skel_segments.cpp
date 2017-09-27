@@ -41,19 +41,19 @@ void readDataActMap(string actfile) {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
 
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
 
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
       cout << element3 << endl;
       int v = element3.find(":",0);
       cout << element3.substr(0,v) << endl;
@@ -87,17 +87,17 @@ void readDataActMapOld() {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
       data_obj_map[element1].push_back(element3);
     }
     cout << "\t" << element1 << " -> \"" << data_act_map[element1] << "\"" << endl;

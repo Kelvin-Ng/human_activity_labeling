@@ -7,6 +7,8 @@ Copyright (C) 2012 Hema Koppula
 
 #include <stdint.h>
 
+#include <pcl/impl/pcl_base.hpp>
+
 #include <pcl/ModelCoefficients.h>
 #include <pcl/kdtree/kdtree.h>
 #include <pcl/search/impl/organized.hpp>
@@ -15,6 +17,7 @@ Copyright (C) 2012 Hema Koppula
 #include <pcl/features/impl/normal_3d.hpp>
 
 #include <pcl/io/pcd_io.h>
+#include <pcl/io/impl/pcd_io.hpp>
 #include <pcl/point_types.h>
 
 #include <pcl/filters/passthrough.h>
@@ -24,6 +27,11 @@ Copyright (C) 2012 Hema Koppula
 #include <pcl/sample_consensus/model_types.h>
 #include <pcl/segmentation/sac_segmentation.h>
 
+#include <pcl/search/search.h>
+#include <pcl/search/impl/search.hpp>
+#include <pcl/search/impl/brute_force.hpp>
+#include <pcl/search/impl/flann_search.hpp>
+#include <pcl/search/impl/kdtree.hpp>
 #include "includes/point_types.h"
 #include "includes/color.h"
 #include "includes/CombineUtils.h"

@@ -15,18 +15,18 @@ Copyright (C) 2012 Hema Koppula
 #include <cmath>
 #include <dirent.h>
 #include "constants.h"
-#include <opencv2/opencv.hpp>
 
 #include <pcl/point_types.h>
 typedef pcl::PointXYZRGB PointT;
 #include "includes/point_types.h"
 #include "includes/CombineUtils.h"
+#include <opencv2/opencv.hpp>
+
 
 #include "readData.cpp"
 #include "frame.cpp"
 
 #include "features_multiFrame.cpp"
-
 
 using namespace std;
 
@@ -76,11 +76,11 @@ void readSegmentsFile() {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2;
-    parseChk(getline(lineStream, element1, ';'));
+    parseChk(!getline(lineStream, element1, ';').fail());
     if (element1.compare("END") == 0) {
       break;
     }
-    //parseChk(getline(lineStream, element2, ',')); // get actor
+    //parseChk(!getline(lineStream, element2, ',').fail()); // get actor
     while (getline(lineStream, element2, ';')) {
       int pos = element2.find_first_of(':');
       int cluster = atoi(element2.substr(0, pos).c_str());
@@ -115,12 +115,12 @@ void readLabelFile() {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
     if (element1.compare("END") == 0) {
       break;
     }
-    //parseChk(getline(lineStream, element2, ',')); // get actor
-    while (getline(lineStream, element2, ',')) {
+    //parseChk(!getline(lineStream, element2, ',').fail()); // get actor
+    while (!getline(lineStream, element2, ',').fail()) {
       FrameList[element1].insert(atoi(element2.c_str()));
     }
     count++;
@@ -142,17 +142,17 @@ void readDataActMap(string actfile) {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
       cout << element3 << endl;
       int v = element3.find(":",0);
       cout << element3.substr(0,v) << endl;
@@ -181,19 +181,19 @@ void readDataActMapOld(string actfile) {
   while (getline(file, line)) {
     stringstream lineStream(line);
     string element1, element2, element3;
-    parseChk(getline(lineStream, element1, ','));
+    parseChk(!getline(lineStream, element1, ',').fail());
 
     if (element1.compare("END") == 0) {
       break;
     }
-    parseChk(getline(lineStream, element2, ','));
+    parseChk(!getline(lineStream, element2, ',').fail());
     if (element1.length() != 10) {
       errorMsg("Data Act Map file format mismatch..");
     }
 
     data_act_map[element1] = element2;
-    parseChk(getline(lineStream, element3, ',')); // get actor
-    while (getline(lineStream, element3, ',')) {
+    parseChk(!getline(lineStream, element3, ',').fail()); // get actor
+    while (!getline(lineStream, element3, ',').fail()) {
     data_obj_map[element1].push_back(element3);
     }
     cout << "\t" << element1 << " : " << data_act_map[element1]  << endl;

@@ -5,14 +5,15 @@ Copyright (C) 2012 Hema Koppula
 #ifndef FEATURE_GENERATION_PCL_SRC_FRAME_H_
 #define FEATURE_GENERATION_PCL_SRC_FRAME_H_
 
-#include <opencv2/opencv.hpp>
-#include <pcl/point_types.h>
-#include <pcl/io/pcd_io.h>
 #include <assert.h>
 #include <iostream>
 #include <string>
 #include <map>
 #include <vector>
+
+#include <pcl/point_types.h>
+#include <pcl/io/pcd_io.h>
+#include <opencv2/opencv.hpp>
 
 #include "./frame_skel.cpp"
 #include "includes/color.h"
@@ -23,7 +24,7 @@ Copyright (C) 2012 Hema Koppula
 typedef pcl::PointXYZRGB PointT;
 
 
-#define sqr(x) ((x)*(x))
+#define frame_sqr(x) ((x)*(x))
 
 using namespace std;
 
